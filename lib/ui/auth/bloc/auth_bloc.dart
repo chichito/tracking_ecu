@@ -9,6 +9,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<CheckGpsStatus>((event, emit) async {
       // TODO: implement event handler
       bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      print(serviceEnabled);
       if (!serviceEnabled) {
         return emit(DisabledGps());
       } else {

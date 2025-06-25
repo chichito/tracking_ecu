@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tracking_ecu/ui/auth/bloc/auth_bloc.dart';
+import 'package:tracking_ecu/ui/core/navigation/app_navigator.dart';
 
 class AuthHandler extends StatelessWidget {
   const AuthHandler({
@@ -12,6 +15,27 @@ class AuthHandler extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
+        // TODO: implement listener
+        print(state.toString());
+        switch (state) {
+          case DisabledGps():
+            navigatorKey.currentState?.pushNamedAndRemoveUntil(
+              AppNavigator.gpsPage,
+              (route) => false,
+            );
+            break;
+          case EnabledGps():
+            navigatorKey.currentState?.pushNamedAndRemoveUntil(
+              AppNavigator.homeMap,
+              (route) => false,
+            );
+            break;
+          default:
+        }
+      },
+      child: child,
+    );
   }
 }
