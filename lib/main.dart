@@ -29,8 +29,8 @@ class MyApp extends StatelessWidget {
           theme: AppTheme.light,
           debugShowCheckedModeBanner: false,
           routes: {
-            AppNavigator.gpsPage: (context) => const GpsPage(),
-            AppNavigator.homeMap: (context) => const HomeMap(),
+            AppNavigator.gpsPage: (context) => GpsPage(),
+            AppNavigator.homeMap: (context) => HomeMap(),
           },
         ),
       ),
