@@ -18,15 +18,22 @@ class AuthHandler extends StatelessWidget {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         // TODO: implement listener
-        print(state.toString());
         switch (state) {
           case DisabledGps():
             navigatorKey.currentState?.pushNamedAndRemoveUntil(
               AppNavigator.gpsPage,
+              arguments: 1,
               (route) => false,
             );
             break;
-          case EnabledGps():
+          case PermissionDenied():
+            navigatorKey.currentState?.pushNamedAndRemoveUntil(
+              AppNavigator.gpsPage,
+              arguments: 2,
+              (route) => false,
+            );
+            break;
+          case PermissionGranted():
             navigatorKey.currentState?.pushNamedAndRemoveUntil(
               AppNavigator.homeMap,
               (route) => false,

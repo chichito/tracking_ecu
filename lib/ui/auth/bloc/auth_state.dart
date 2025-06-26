@@ -11,3 +11,5 @@ final class EnabledGps extends AuthState {}
 final class DisabledGps extends AuthState {}
 
 final class PermissionDenied extends AuthState {}
+
+final class PermissionGranted extends AuthState {}

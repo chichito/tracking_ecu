@@ -6,6 +6,7 @@ import 'package:tracking_ecu/ui/core/navigation/app_navigator.dart';
 import 'package:tracking_ecu/ui/core/theme/app_theme.dart';
 import 'package:tracking_ecu/ui/gps/view/gps_page.dart';
 import 'package:tracking_ecu/ui/gps/view/home_map.dart';
+import 'package:tracking_ecu/ui/root/view/root_page.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 void main() {
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AuthBloc()..add(CheckGpsStatus()),
+      create: (context) => AuthBloc()..add(CheckGpsPermissionStatus()),
       child: AuthHandler(
         navigatorKey: navigatorKey,
         child: MaterialApp(
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
           theme: AppTheme.light,
           debugShowCheckedModeBanner: false,
           routes: {
+            AppNavigator.main: (_) => RootPage(),
             AppNavigator.gpsPage: (context) => GpsPage(),
             AppNavigator.homeMap: (context) => HomeMap(),
           },
