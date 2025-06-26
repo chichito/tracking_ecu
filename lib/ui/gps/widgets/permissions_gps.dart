@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 
 class PermissionsGps extends StatelessWidget {
   const PermissionsGps({super.key});
@@ -23,8 +24,21 @@ class PermissionsGps extends StatelessWidget {
           ),
           const SizedBox(height: 32),
           ElevatedButton(
-            onPressed: () {
-              print('solicitar permisos');
+            onPressed: () async {
+              LocationPermission permission =
+                  await Geolocator.checkPermission();
+
+              if (permission == LocationPermission.denied) {
+                permission = await Geolocator.requestPermission();
+
+                if (permission == LocationPermission.denied) {
+                  return print("Location permission denied");
+                }
+              }
+
+              if (permission == LocationPermission.deniedForever) {
+                return print('Location permissions are permanently denied');
+              }
             },
             child: const Text('Solicitar Permisos'),
           ),
