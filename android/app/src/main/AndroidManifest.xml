@@ -1,13 +1,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+<<<<<<< HEAD
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION"/>
 
+=======
+>>>>>>> f26d28bba9eaf513f1d5d232e602390002db9ce1
     <application
         android:label="tracking_ecu"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+<<<<<<< HEAD
+=======
+         <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="API KEY HERE"/>
+>>>>>>> f26d28bba9eaf513f1d5d232e602390002db9ce1
         <activity
             android:name=".MainActivity"
             android:exported="true"
