@@ -8,7 +8,11 @@ plugins {
 android {
     namespace = "com.example.tracking_ecu"
     compileSdk = 35
+<<<<<<< HEAD
+    ndkVersion = "27.0.12077973"
+=======
     ndkVersion =  "27.0.12077973"
+>>>>>>> f26d28bba9eaf513f1d5d232e602390002db9ce1
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
