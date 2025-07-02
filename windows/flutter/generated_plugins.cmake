@@ -4,10 +4,7 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   geolocator_windows
-<<<<<<< HEAD
-=======
   permission_handler_windows
->>>>>>> f26d28bba9eaf513f1d5d232e602390002db9ce1
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST

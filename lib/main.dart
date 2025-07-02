@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tracking_ecu/features/gps/bloc/gps_bloc.dart';
+import 'package:tracking_ecu/features/map/bloc/location_bloc.dart';
 import 'package:tracking_ecu/pages/loading_page.dart';
 
 void main() {
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo1255',
+      title: 'Flutter Demo',
       theme: ThemeData.light(),
       home: MultiBlocProvider(
         providers: [
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
               ..add(GpsInitialStatusEvent())
               ..add(ChangeGpsStatusEvent()),
           ),
+          BlocProvider(create: (context) => LocationBloc()),
         ],
         child: LoadingPage(),
       ),
