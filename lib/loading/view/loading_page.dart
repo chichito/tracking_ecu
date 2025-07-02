@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tracking_ecu/features/gps/bloc/gps_bloc.dart';
 import 'package:tracking_ecu/features/gps/pages/gps_page.dart';
-import 'package:tracking_ecu/features/map/pages/map_page.dart';
+import 'package:tracking_ecu/features/map/view/map_page.dart';
 
 class LoadingPage extends StatelessWidget {
   const LoadingPage({super.key});

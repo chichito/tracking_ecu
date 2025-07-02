@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tracking_ecu/core/theme.dart/app_theme.dart';
 import 'package:tracking_ecu/features/gps/bloc/gps_bloc.dart';
 import 'package:tracking_ecu/features/map/bloc/location_bloc.dart';
-import 'package:tracking_ecu/pages/loading_page.dart';
+import 'package:tracking_ecu/loading/view/loading_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +17,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData.light(),
       home: MultiBlocProvider(
         providers: [
           BlocProvider(
@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
         ],
         child: LoadingPage(),
       ),
+      theme: AppTheme.light,
     );
   }
 }

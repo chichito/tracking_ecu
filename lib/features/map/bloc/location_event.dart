@@ -1,5 +1,6 @@
 part of 'location_bloc.dart';
 
-class LocationEvent {}
+sealed class LocationEvent {}
 
+// Evento para obtener la ubicación inicial del usuario
 class InitialLocationEvent extends LocationEvent {}

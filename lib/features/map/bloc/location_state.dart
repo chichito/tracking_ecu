@@ -1,5 +1,13 @@
 part of 'location_bloc.dart';
 
-class LocationState {}
+class LocationState {
+  final LatLng? lastKnownLocation;
 
-final class LocationInitial extends LocationState {}
+  LocationState({this.lastKnownLocation});
+
+  LocationState copyWith({LatLng? lastKnownLocation}) {
+    return LocationState(
+      lastKnownLocation: lastKnownLocation ?? this.lastKnownLocation,
+    );
+  }
+}
