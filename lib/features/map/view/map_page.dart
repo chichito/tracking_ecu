@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:tracking_ecu/features/map/bloc/location_bloc.dart';
-import 'package:tracking_ecu/features/map/widgets/floating_actions_map.dart';
+import 'package:tracking_ecu/core/map_style/map_style.dart';
+import 'package:tracking_ecu/features/map/bloc/location_bloc/location_bloc.dart';
+import 'package:tracking_ecu/features/map/bloc/map_cubit/map_cubit.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key});
@@ -12,41 +15,101 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPageState extends State<MapPage> {
-  GoogleMapController? googleMapController;
-
   @override
   void initState() {
     super.initState();
-    context.read<LocationBloc>().add(InitialLocationEvent());
+    // context.read<LocationBloc>().add(InitialLocationEvent());
+    // context.read<LocationBloc>().add(StartTrackingUserEvent());
+    context.read<LocationBloc>()
+      ..add(InitialLocationEvent())
+      ..add(StartTrackingUserEvent());
   }
 
   @override
   Widget build(BuildContext context) {
+    final mapCubit = context.read<MapCubit>();
+    final locationBloc = context.read<LocationBloc>();
+
     return Scaffold(
       body: SafeArea(
-        child: BlocBuilder<LocationBloc, LocationState>(
+        child: BlocConsumer<LocationBloc, LocationState>(
+          listener: (context, state) {
+            if (state.lastKnownLocation != null) {
+              mapCubit.moveCamera(state.lastKnownLocation!);
+            }
+          },
           builder: (context, state) {
             if (state.lastKnownLocation == null) {
+              // return Center(child: Text('Cargando ubi
+              //cación ...'));
               return Center(child: CircularProgressIndicator.adaptive());
             }
-
             return GoogleMap(
+              style: jsonEncode(mapStyle),
               initialCameraPosition: CameraPosition(
                 target: state.lastKnownLocation!,
-                zoom: 15,
+                zoom: 18,
               ),
               zoomControlsEnabled: false,
               myLocationButtonEnabled: false,
               myLocationEnabled: true,
               onMapCreated: (controller) {
-                googleMapController = controller;
+                mapCubit.onMapInitialized(controller);
+              },
+              // circles: {
+              //   Circle(
+              //     circleId: CircleId('circle-1'),
+              //     center: state.lastKnownLocation!,
+              //     radius: 50,
+              //     strokeWidth: 3,
+              //     strokeColor: Colors.purple,
+              //   )
+              // },
+              // polygons: {
+              //   Polygon(
+              //     polygonId: PolygonId('polygon-1'),
+              //     points: [
+              //       LatLng(-3.991765, -79.203404),
+              //       LatLng(-3.992240, -79.203358),
+              //       LatLng(-3.992190, -79.202456),
+              //       LatLng(-3.991692, -79.202700),
+              //     ],
+              //     fillColor: Colors.purple.shade100,
+              //     strokeWidth: 3,
+              //     strokeColor: Colors.purple,
+              //   )
+              // },
+              polylines: {
+                Polyline(
+                  polylineId: PolylineId('polyline-1'),
+                  points: state.locationHistory,
+                  color: Colors.purple,
+                  width: 3,
+                  visible: state.showLocationHistory,
+                ),
               },
             );
           },
         ),
       ),
-      floatingActionButton: FloatingActionsMap(
-        googleMapController: googleMapController,
+      floatingActionButton: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          FloatingActionButton.small(
+            onPressed: () {
+              locationBloc.add(ToggleShowLocationEvent());
+            },
+            child: Icon(Icons.more_vert),
+          ),
+          FloatingActionButton.small(
+            onPressed: () {
+              final lastKnownLocation = locationBloc.state.lastKnownLocation;
+              if (lastKnownLocation == null) return;
+              mapCubit.moveCamera(lastKnownLocation);
+            },
+            child: Icon(Icons.my_location),
+          ),
+        ],
       ),
     );
   }
