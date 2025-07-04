@@ -1,40 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:tracking_ecu/features/map/bloc/location_bloc/location_bloc.dart';
+import 'package:tracking_ecu/features/map/bloc/map_cubit/map_cubit.dart';
 
-class FloatingActionsMap extends StatelessWidget {
-  const FloatingActionsMap({super.key, required this.googleMapController});
-
-  final GoogleMapController? googleMapController;
+class FloatingActions extends StatelessWidget {
+  const FloatingActions({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final mapCubit = context.read<MapCubit>();
+    final locationBloc = context.read<LocationBloc>();
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         FloatingActionButton.small(
-          heroTag: 'polyline',
           onPressed: () {
-            //mapCubit.toggleShowPolyline();
+            locationBloc.add(ToggleShowLocationEvent());
           },
-          child: const Icon(Icons.more_horiz),
+          child: Icon(Icons.more_vert),
         ),
         FloatingActionButton.small(
-          heroTag: 'location',
           onPressed: () {
-            final lastKnownLocation = context
-                .read<LocationBloc>()
-                .state
-                .lastKnownLocation;
+            final lastKnownLocation = locationBloc.state.lastKnownLocation;
             if (lastKnownLocation == null) return;
-            googleMapController?.animateCamera(
-              CameraUpdate.newCameraPosition(
-                CameraPosition(target: lastKnownLocation, zoom: 30),
-              ),
-            );
+            mapCubit.moveCamera(lastKnownLocation);
           },
-          child: const Icon(Icons.gps_fixed),
+          child: Icon(Icons.my_location),
         ),
       ],
     );
