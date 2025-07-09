@@ -107,7 +107,7 @@ class _MapPageState extends State<MapPage> {
                     Marker(
                       markerId: MarkerId('marker-id1'),
                       // position: state.lastKnownLocation!,
-                      position: LatLng(37.398334, -122.119863),
+                      position: LatLng(-2.309794, -78.125905),
                       infoWindow: InfoWindow(
                         title: 'User position',
                         snippet: 'Last known position',
@@ -118,7 +118,7 @@ class _MapPageState extends State<MapPage> {
                       Marker(
                         markerId: MarkerId('custom-marker'),
                         icon: bitmapDescriptor!,
-                        position: LatLng(37.398094, -122.119688),
+                        position: LatLng(-2.309173, -78.123888),
                       ),
 
                     // Marcador cargado desde una imagen de internet
@@ -126,7 +126,7 @@ class _MapPageState extends State<MapPage> {
                       Marker(
                         markerId: MarkerId('network-marker'),
                         icon: bitmapDescriptorNetwork!,
-                        position: LatLng(37.397805, -122.120014),
+                        position: LatLng(-2.309301, -78.125004),
                       ),
                   },
                 ),
